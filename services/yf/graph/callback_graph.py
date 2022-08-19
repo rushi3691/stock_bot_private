@@ -42,17 +42,13 @@ async def graphPeriod(c: Client, callback_query: CallbackQuery, company_code: st
 @send_typing_action
 async def graphGenCallback(c: Client, callback_query: CallbackQuery):
     logger.info('in graphGenCallback')
-    # query = update.callback_query
     data = callback_query.data.split()
     period = data[0]
     ticker_code = data[2]
     logger.info(f"{period} {ticker_code}")
     loop = asyncio.get_event_loop()
     img = await loop.run_in_executor(executor, graph, ticker_code, period, callback_query.message.chat.id)
-    # img = graph(ticker_code, period, callback_query.message.chat.id)
     await callback_query._client.send_photo(chat_id=callback_query.message.chat.id, photo=open(img, 'rb'))
     await callback_query.message.delete()
     os.remove(img)
-    # query.message.delete()
-    # context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(img,'rb'))
     
