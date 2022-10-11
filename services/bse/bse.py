@@ -93,7 +93,6 @@ async def bseName(c: Client, msg: Message, stock_name: str):
 async def bseCode(c: Client, msg_or_query: Union[Message, CallbackQuery], stock_code: str):
     global bse_fetch
     await checkBse()
-    # if bse_fetch:
 
     loop = asyncio.get_event_loop()
     try:
@@ -102,7 +101,8 @@ async def bseCode(c: Client, msg_or_query: Union[Message, CallbackQuery], stock_
         quote = None
     text = bseMessage(quote, stock_code)
     if isinstance(msg_or_query, CallbackQuery):
-        return await msg_or_query.edit_message_text(text)
+        await c.send_message(chat_id = msg_or_query.message.chat.id, text=text)
+        return await msg_or_query.message.delete()
     else:
         return await msg_or_query.reply(text)
 

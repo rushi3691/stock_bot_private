@@ -1,3 +1,4 @@
+import asyncio
 import uvloop
 uvloop.install()
 from dotenv import load_dotenv
@@ -10,7 +11,30 @@ from utils.others import *
 from pyrogram import idle
 
 
-if __name__ == '__main__':
-    bot.start()
-    idle()
-    bot.stop()
+# fastapi dependencies
+from fastapi import FastAPI
+import uvicorn
+from uvicorn import Server
+
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {
+        "status": "working",
+        "user": bot.me.username
+    }
+
+
+async def main():
+    config = uvicorn.Config("main:app", host="0.0.0.0", port=8000, workers=1)
+    await bot.start()
+    server = Server(config = config)
+    api = asyncio.create_task(server.serve())
+    _bot = asyncio.create_task(idle())
+
+    await asyncio.wait([api, _bot])
+    await bot.stop()
+
+if __name__ == "__main__":
+    bot.run(main())

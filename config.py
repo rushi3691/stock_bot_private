@@ -4,6 +4,6 @@ SERVICES = {
     'bse':1,
 }
 
-DEFAULT_SERVICE = 'yfinance'
+DEFAULT_SERVICE = 'bse'
 CURR_SERVICE = 'yfinance'
 DB = {}

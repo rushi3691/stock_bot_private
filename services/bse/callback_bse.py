@@ -22,9 +22,7 @@ async def bseCallback(c: Client, callback_query: CallbackQuery):
         await bseWorstCallback(c, callback_query)
 
 
-@send_typing_action
 async def bseNameCallback(c: Client, callback_query: CallbackQuery):
-    # query = update.callback_query
     data = callback_query.data.split()[0]
     await bseCode(c, callback_query, data)
 
