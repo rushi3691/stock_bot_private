@@ -1,6 +1,6 @@
 import asyncio
-import uvloop
-uvloop.install()
+# import uvloop
+# uvloop.install()
 from dotenv import load_dotenv
 load_dotenv()
 from utils.logger import logger
