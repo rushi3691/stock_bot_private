@@ -12,3 +12,4 @@ yfinance
 fastapi[all]
 kaleido
 aiohttp
+pandas_datareader
