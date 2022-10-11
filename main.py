@@ -10,20 +10,23 @@ from handler.callback import *
 from utils.others import *
 from pyrogram import idle
 
-
 # fastapi dependencies
 from fastapi import FastAPI
 import uvicorn
 from uvicorn import Server
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import Request
+
+
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
-@app.get("/")
-async def root():
-    return {
-        "status": "working",
-        "user": bot.me.username
-    }
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 
 
 async def main():
