@@ -11,3 +11,4 @@ yahoo-fin
 yfinance
 fastapi[all]
 kaleido
+aiohttp
